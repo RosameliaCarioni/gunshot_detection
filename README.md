@@ -2,4 +2,5 @@
 ## Student: Rosamelia Carioni 
 ## Supervisor: Pietro Bonizzi 
 
-More information to be added :D 
+To get all the required packages do:
+pip install -r requirements.txt
