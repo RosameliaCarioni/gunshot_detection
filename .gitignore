@@ -1,0 +1,10 @@
+data/*
+!data/Clips/
+!data/Sounds_background/
+!data/Sounds_gunshots/
+!data/models
+.DS_Store
+.idea/*
+data_frames/*
+param_optimization/*
+__pycache__*
