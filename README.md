@@ -19,10 +19,11 @@ docker ps -a
 
 To run a container, find the name using ps -a and then 
 ```
-docker run -p 8888:8888 -it -v () [CONTAINER-NAME]
+docker run -it -v /Users/rosameliacarioni/University/Thesis/code:/tf/notebooks -p 8888:8888 gunshot
 ```
+pwd to find path 
 
 To attach to a container that is running, grab the name as above and run:
 ```
-docker exec -it [CONTAINER-NAME] bash
+docker exec -it gunshot bash
 ```
