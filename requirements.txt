@@ -1,1 +1,6 @@
-tensorflow matplotlib keras_tuner os numpy seaborn sklearn
+numpy
+tensorflow 
+matplotlib 
+keras_tuner  
+seaborn 
+sklearn
