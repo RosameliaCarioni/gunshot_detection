@@ -5,13 +5,25 @@
 To get all the required packages do:
 pip install -r requirements.txt
 
+## DSRI website 
+```
+https://console-openshift-console.apps.dsri2.unimaas.nl/topology/ 
+``` 
 
 ## Docker Commands
 To list images
 ```
 docker image ls
 ```
+To build image 
+```
+docker build -t rosameliacarioni/bachelor_thesis_gunshot .
+```
 
+Push image to docker hub 
+```
+docker push rosameliacarioni/bachelor_thesis_gunshot
+```
 To see running containers
 ```
 docker ps -a
@@ -25,5 +37,5 @@ pwd to find path
 
 To attach to a container that is running, grab the name as above and run:
 ```
-docker exec -it gunshot bash
+docker exec -it gunshot bash 
 ```
