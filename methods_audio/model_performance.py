@@ -6,13 +6,13 @@ from sklearn.model_selection import StratifiedKFold
 
 # Method used to calculate different performance measures of a model. 
 # It returns confusion_matrices, histories
-def performance(location_model, x, y, epoch=15, batch_size=8):
+def performance(location_model, x, y, learning_rate, epoch=15, batch_size=8):
     # Set values 
     epoch = epoch
     batch = batch_size
     splits = 10
     location = location_model
-    lr = 0.02661877777328162 # result from param optimization
+    lr = learning_rate
     loss = "BinaryCrossentropy"
 
     kfold = StratifiedKFold(n_splits=splits, shuffle=True, random_state=123)

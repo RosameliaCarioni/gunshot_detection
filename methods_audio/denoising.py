@@ -4,7 +4,7 @@ import scipy.io.wavfile as wavfile
 import noisereduce as nr
 import tensorflow as tf
 
-# This function saves the denoised clips 
+# This function saves clips 
 def save_denoised(reduced_noise, rate, destination_file):
     # because the denoised clips will be used by tf.audio.decode_wav and this only takes 16-bit files, the denoised audios are saved as int16
     # https://stackoverflow.com/questions/64813162/read-wav-file-with-tf-audio-decode-wav
@@ -12,29 +12,50 @@ def save_denoised(reduced_noise, rate, destination_file):
 
 
 # SPECTRAL GATING METHODS
-def denoise_spectral_gating(file_name):
-    rate, data = wavfile.read(file_name)
-    data = data - data.mean() #center data  #TODO: maybe remove from here 
-    reduced_noise = nr.reduce_noise(y=data, sr=rate, stationary=True)
-    return reduced_noise, rate
 
-def spectral(file_name, destination_file):
-    reduced_noise, rate = denoise_spectral_gating(file_name)
-    save_denoised(reduced_noise, rate, destination_file)
+def spectral(wave):
+    rate = 8000
+    reduced_noise = nr.reduce_noise(y=wave, sr=rate, stationary=True)
+    return reduced_noise
 
+def apply_spectral(signals): 
+    """
+        This method denoises a list of signals by applying spectral gate denoising 
+
+        :param signals: list with signals that will be denoised
+        :type signals: list of numpy.ndrray
+        :return: new list with denoised signals
+    """
+    
+    denoised_signals = []
+    for wave in signals: 
+        denoised_wave = spectral(wave)
+        denoised_signals.append(denoised_wave)
+    return denoised_signals
 
 
 # LOW PASS FILTER METHODS 
-def butter_lowpass_filter(wave, cutoff, sample_rate, order=4):
+def low_pass(wave, cutoff, order): 
+    sample_rate = 8000 
     b, a = butter(order, cutoff, fs=sample_rate, btype='low', analog=False)
     filtered_data = lfilter(b, a, wave)
     return filtered_data
 
-def low_pass(file_name, cutoff, order, destination_file): 
-    sample_rate, wave = wavfile.read(file_name)
-    wave = wave - wave.mean() #center data  #TODO: maybe remove from here 
-    denoised = butter_lowpass_filter(wave, cutoff, sample_rate, order)
-    save_denoised(denoised, sample_rate, destination_file)
+def apply_low_pass(signals, cutoff, order): 
+    """
+        This method denoises a list of signals by applying spectral gate denoising 
+
+        :param signals: list with signals that will be denoised
+        :type signals: list of numpy.ndrray
+        :return: new list with denoised signals
+    """
+
+    denoised_signals = []
+    for wave in signals: 
+        denoised_wave = low_pass(wave, cutoff, order)
+        denoised_signals.append(denoised_wave)
+    return denoised_signals
+
 
 
 # BAND PASS FILTER METHODS
